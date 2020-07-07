@@ -1,0 +1,36 @@
+{
+  "name": "pii-finder",
+  "version": "1.0.0",
+  "description": "JS library to detect PII in a given text",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hereismass/pii-finder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hereismass/pii-finder/issues"
+  },
+  "homepage": "https://github.com/hereismass/pii-finder#readme",
+  "dependencies": {
+    "@types/jest": "^26.0.4",
+    "jest": "^26.1.0",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.1.1",
+    "typescript": "^3.9.6"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
