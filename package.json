@@ -7,9 +7,10 @@
     "test": "jest --config jestconfig.json",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test",
-    "version": "npm run format && git add -A src",
+    "benchmark": "node benchmark/index.js",
+    "prepare": "yarn run build",
+    "prepublishOnly": "yarn run test",
+    "version": "yarn run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
   "repository": {
@@ -25,7 +26,9 @@
   "homepage": "https://github.com/hereismass/pii-finder#readme",
   "dependencies": {
     "@types/jest": "^26.0.4",
+    "benchmark": "^2.1.4",
     "jest": "^26.1.0",
+    "microtime": "^3.0.0",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
