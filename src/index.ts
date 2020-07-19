@@ -1,21 +1,39 @@
-import { hasEmail, hasIpv4, hasIpv6 } from './regexes';
+import {
+  hasEmail,
+  hasIpv4,
+  hasIpv6,
+  replaceEmail,
+  replaceIpv4,
+  replaceIpv6,
+} from './regexes';
 
 type PIIType = 'email' | 'ipv4' | 'ipv6';
 
-let handledPII: any = {
+let handledPII: { [key: string]: boolean } = {
   email: true,
   ipv4: true,
   ipv6: true,
 };
 
-const setHandledPII = (piiArray: Array<PIIType>) => {
+const setHandledPII = (piiArray: Array<PIIType>): void => {
   handledPII = {};
   piiArray.forEach((pii: PIIType) => {
     handledPII[pii] = true;
   });
 };
 
-const containsPII = (text: string) => {
+const getHandledPII = (): Array<string> => {
+  const piiArray = [];
+  for (const pii in handledPII) {
+    if (handledPII[pii]) {
+      piiArray.push(pii);
+    }
+  }
+
+  return piiArray;
+};
+
+const containsPII = (text: string): boolean => {
   // handle bad argument
   if (!text || typeof text !== 'string') {
     return false;
@@ -28,4 +46,24 @@ const containsPII = (text: string) => {
   );
 };
 
-export { setHandledPII, containsPII };
+const anonymizePII = (text: string): string => {
+  // handle bad argument
+  if (!text || typeof text !== 'string') {
+    return text;
+  }
+  let anonymizedText = text;
+
+  if (handledPII.email) {
+    anonymizedText = replaceEmail(anonymizedText);
+  }
+  if (handledPII.ipv4) {
+    anonymizedText = replaceIpv4(anonymizedText);
+  }
+  if (handledPII.ipv6) {
+    anonymizedText = replaceIpv6(anonymizedText);
+  }
+
+  return anonymizedText;
+};
+
+export { setHandledPII, getHandledPII, containsPII, anonymizePII };
